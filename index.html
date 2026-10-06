@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Propuesta creativa de @cambiateyvamos, la agenda cultural de ATE en CABA.">
+<title>Cambiate y Vamos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Montserrat:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: una infografía vertical en bloques de color plenos, cada uno una "diapositiva" de la propuesta, con navegación fija y barra de progreso. Look de marca único (no cambia con el tema). */
+:root{
+  --rojo:#FF3434;
+  --violeta:#8C52FF;
+  --rosa:#FF8FD1;
+  --lima:#C2FF6B;
+  --amarillo:#FFDE59;
+  --tinta:#2A1650;
+  --blanco:#FFFFFF;
+  --f-display:"Bagel Fat One","Arial Black",Impact,sans-serif;
+  --f-label:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--rojo);color:var(--blanco);font-family:var(--f-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+
+/* barra fija */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--tinta);color:var(--blanco)}
+.progress{height:5px;background:linear-gradient(90deg,var(--lima),var(--amarillo),var(--rosa));transform-origin:left;transform:scaleX(0)}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;font-family:var(--f-body);font-weight:700;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--blanco);text-decoration:none;padding:6px 12px;border-radius:999px;border:1.5px solid rgba(255,255,255,.25);transition:background .2s,color .2s,border-color .2s}
+.nav a:hover{border-color:var(--lima)}
+.nav a.on{background:var(--lima);color:var(--tinta);border-color:var(--lima)}
+.nav a:focus-visible{outline:3px solid var(--amarillo);outline-offset:2px}
+
+/* secciones */
+section{position:relative;overflow:hidden;padding-block:72px;padding-inline:16px;scroll-margin-top:60px}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto}
+.bg-rojo{background:var(--rojo)}
+.bg-violeta{background:var(--violeta)}
+.bg-rosa{background:var(--rosa);color:var(--tinta)}
+.bg-lima{background:var(--lima);color:var(--tinta)}
+.bg-amarillo{background:var(--amarillo);color:var(--tinta)}
+
+.burst{position:absolute;z-index:0;pointer-events:none}
+.burst svg{display:block;width:100%;height:100%}
+
+.eyebrow{font-family:var(--f-label);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:14px;display:inline-block;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.big{font-family:var(--f-display);font-weight:400;font-size:clamp(46px,10vw,112px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase}
+.big span{display:block}
+.lead{font-size:clamp(17px,2.2vw,20px);max-width:62ch;margin-top:24px}
+
+/* reveal: siempre visible; solo "rebota" al entrar */
+.pop{transition:transform .6s cubic-bezier(.2,1.4,.4,1)}
+.js .pop.pre{transform:translateY(22px) rotate(-1.2deg) scale(.97)}
+
+/* HERO */
+.hero{padding-block:64px 88px;text-align:center}
+.hero .ast{width:120px;height:120px;margin:0 auto -18px;animation:spin 16s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero h1{font-family:var(--f-display);font-weight:400;text-transform:uppercase;line-height:.88;font-size:clamp(56px,14vw,168px)}
+.hero h1 .a{color:var(--blanco);display:block}
+.hero h1 .b{color:var(--amarillo);display:block}
+.handle{display:inline-block;margin-top:28px;padding:12px 26px;border:2px solid var(--violeta);border-radius:999px;font-weight:500;letter-spacing:.08em;font-size:15px;background:rgba(42,22,80,.18)}
+.hero-sub{font-family:var(--f-label);font-weight:700;font-size:clamp(18px,2.6vw,24px);margin-top:28px;color:var(--lima)}
+.scrollhint{margin-top:34px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.scrollhint b{display:block;font-size:22px;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+
+/* QUE ES */
+.que-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:start;margin-top:36px}
+.que-grid>*{min-width:0}
+.que-text p+p{margin-top:16px}
+.sticker{background:var(--amarillo);color:var(--tinta);border-radius:28px;padding:26px;transform:rotate(1.5deg)}
+.sticker h3{font-family:var(--f-label);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.sticker li{display:flex;gap:10px;align-items:center;font-weight:600;padding:10px 0;border-top:2px dashed rgba(42,22,80,.25)}
+.sticker li:first-child{border-top:0}
+.pin{width:26px;height:26px;border-radius:50%;background:var(--rojo);flex:0 0 auto;display:grid;place-items:center;color:var(--blanco);font-size:13px}
+.slogan{margin-top:40px;font-family:var(--f-display);font-size:clamp(24px,4.4vw,44px);line-height:1.05;text-transform:uppercase;color:var(--lima)}
+.fact-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.fact{font-family:var(--f-label);font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--tinta);color:var(--blanco)}
+
+/* PUBLICO */
+.aud-list{display:grid;gap:28px;margin-top:40px}
+.aud{display:grid;grid-template-columns:260px 1fr 1fr;gap:0;border-radius:32px;overflow:hidden;background:var(--blanco);color:var(--tinta)}
+.aud>*{min-width:0;padding:26px}
+.aud-id{color:var(--blanco);display:flex;flex-direction:column;gap:14px}
+.aud-num{font-family:var(--f-display);font-size:56px;line-height:.8;color:var(--amarillo)}
+.aud-id h3{font-family:var(--f-display);font-weight:400;font-size:28px;line-height:1;text-transform:uppercase}
+.aud-id p{font-size:15px}
+.aud-id .msg{margin-top:auto;font-family:var(--f-label);font-weight:700;background:var(--amarillo);color:var(--tinta);padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.3}
+.aud h4{font-family:var(--f-label);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:14px;display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.aud h4 i{width:30px;height:30px;border-radius:50%;background:var(--amarillo);display:grid;place-items:center;font-style:normal;font-size:15px}
+.aud li{position:relative;padding-left:20px;font-size:15px;margin-top:8px}
+.aud li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%}
+.col-des li::before{background:var(--rojo)}
+.col-obj li::before{background:var(--violeta)}
+.col-obj{background:#F4EEFF}
+.a1 .aud-id{background:var(--rojo)} .a2 .aud-id{background:var(--violeta)} .a3 .aud-id{background:var(--tinta)} .a4 .aud-id{background:#E0348E}
+
+/* VALOR */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;position:relative}
+.flow>*{min-width:0}
+.step{border-radius:28px;padding:24px 22px 26px;color:var(--tinta);position:relative}
+.step:nth-child(1){background:var(--lima)} .step:nth-child(2){background:var(--amarillo)} .step:nth-child(3){background:var(--rosa)} .step:nth-child(4){background:var(--blanco)}
+.step .n{font-family:var(--f-display);font-size:18px;width:40px;height:40px;border-radius:50%;background:var(--tinta);color:var(--blanco);display:grid;place-items:center;margin-bottom:16px}
+.step h3{font-family:var(--f-display);font-weight:400;font-size:clamp(24px,2.6vw,30px);text-transform:uppercase;line-height:1;margin-bottom:10px}
+.step p{font-size:15px}
+.step:not(:last-child)::after{content:"➜";position:absolute;right:-17px;top:30px;z-index:2;width:30px;height:30px;border-radius:50%;background:var(--tinta);color:var(--lima);display:grid;place-items:center;font-size:14px}
+.formula{margin-top:30px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--f-label);font-weight:700}
+.formula span{padding:8px 14px;border-radius:999px;background:var(--tinta);color:var(--lima);font-size:15px}
+.formula em{font-style:normal;color:var(--amarillo);font-size:20px}
+
+/* CONCEPTOS */
+.concepts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.concepts>*{min-width:0}
+.concept{border:2.5px solid var(--lima);border-radius:32px;padding:28px 24px;text-align:center;background:rgba(42,22,80,.14)}
+.concept .bulb{width:64px;height:64px;border-radius:50%;background:var(--amarillo);display:grid;place-items:center;margin:0 auto 18px;font-size:28px}
+.concept h3{font-family:var(--f-label);font-weight:700;font-size:21px;line-height:1.2;text-transform:uppercase;color:var(--amarillo);margin-bottom:12px}
+.concept p{font-size:15px}
+.concept .tag{display:inline-block;margin-top:16px;font-family:var(--f-label);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta);background:var(--lima);padding:5px 12px;border-radius:999px}
+
+/* MENSAJES */
+.pills{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px;align-items:center}
+.pill{font-family:var(--f-label);font-weight:700;font-size:clamp(16px,2vw,21px);background:var(--lima);color:var(--violeta);padding:14px 24px;border-radius:999px;line-height:1.25}
+.pill:nth-child(3n+2){background:var(--amarillo);color:var(--rojo);transform:rotate(-1.5deg)}
+.pill:nth-child(3n){background:var(--blanco);color:var(--tinta);transform:rotate(1deg)}
+.spark{width:34px;height:34px;flex:0 0 auto}
+
+/* PILARES */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.pillars>*{min-width:0}
+.pillar{background:var(--blanco);color:var(--tinta);border-radius:30px;overflow:hidden;display:flex;flex-direction:column}
+.pillar header{padding:22px 22px 18px;color:var(--blanco)}
+.pillar header .k{font-family:var(--f-label);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.pillar header h3{font-family:var(--f-display);font-weight:400;font-size:28px;line-height:1;text-transform:uppercase;margin-top:6px}
+.pillar header p{font-size:14.5px;margin-top:10px}
+.pillar .ideas{padding:18px 22px 24px;flex:1}
+.pillar .ideas h4{font-family:var(--f-label);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px;color:var(--violeta)}
+.pillar .ideas li{font-size:14.5px;padding:9px 0;border-top:1.5px dashed #E4DAF7}
+.pillar .ideas li:first-of-type{border-top:0}
+.pillar .ideas li b{font-weight:700}
+.p1 header{background:var(--rojo)} .p2 header{background:var(--violeta)} .p3 header{background:var(--tinta)}
+.p4 header{background:#E0348E} .p5 header{background:#1F9E6A} .p6 header{background:#F07A1A}
+.goal{margin-top:14px;font-family:var(--f-label);font-weight:700;font-size:14px;background:var(--amarillo);border-radius:14px;padding:10px 12px;line-height:1.3}
+.extra{margin-top:28px;background:var(--tinta);border-radius:30px;padding:28px 26px;color:var(--blanco)}
+.extra h3{font-family:var(--f-display);font-weight:400;font-size:30px;text-transform:uppercase;color:var(--lima);margin-bottom:16px}
+.extra ul{display:flex;flex-wrap:wrap;gap:10px}
+.extra li{font-size:15px;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.1)}
+
+/* HISTORIAS */
+.hl{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:40px}
+.hl>*{min-width:0}
+.hl-item{text-align:center}
+.ring{aspect-ratio:1;max-width:100%;border-radius:50%;padding:5px;background:conic-gradient(var(--amarillo),var(--rojo),var(--rosa),var(--lima),var(--amarillo))}
+.ring>div{width:100%;height:100%;border-radius:50%;background:var(--rosa);border:4px solid var(--violeta);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;transition:transform .25s}
+.hl-item:hover .ring>div{transform:scale(1.05)}
+.ring .e{font-size:clamp(26px,3.4vw,38px);line-height:1}
+.ring h3{font-family:var(--f-label);font-weight:700;font-size:clamp(12px,1.4vw,16px);text-transform:uppercase;color:var(--rojo);margin-top:6px;letter-spacing:.03em}
+.hl-item p{font-size:14px;margin-top:10px;line-height:1.35}
+
+/* CIERRE */
+.close{text-align:center;padding-block:80px 96px}
+.close .big{color:var(--violeta)}
+.close .big span:last-child{color:var(--rojo)}
+.close p{max-width:52ch;margin:22px auto 0;font-size:18px;font-weight:500}
+.close .handle{border-color:var(--tinta);color:var(--tinta);background:transparent}
+
+/* responsive */
+@media (max-width:900px){
+  .aud{grid-template-columns:1fr 1fr}
+  .aud-id{grid-column:1/-1}
+  .flow{grid-template-columns:1fr 1fr}
+  .step:nth-child(2)::after{display:none}
+  .pillars{grid-template-columns:1fr 1fr}
+  .hl{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:640px){
+  section{padding-block:56px}
+  .que-grid{grid-template-columns:1fr}
+  .aud{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .step::after{display:none!important}
+  .concepts{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .hl{grid-template-columns:repeat(2,1fr);gap:16px}
+  .burst{opacity:.55}
+}
+</style>
+</head>
+<body style="margin:0">
+<div class="top">
+  <div class="progress" id="progress"></div>
+  <nav class="nav" id="nav" aria-label="Secciones">
+    <a href="#inicio">Inicio</a>
+    <a href="#que-es">¿Qué es?</a>
+    <a href="#publico">Público</a>
+    <a href="#valor">Propuesta de valor</a>
+    <a href="#conceptos">Conceptos</a>
+    <a href="#mensajes">Mensajes</a>
+    <a href="#pilares">Pilares</a>
+    <a href="#historias">Destacadas</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section id="inicio" class="hero bg-rojo">
+  <div class="burst" style="right:-80px;top:-60px;width:360px;height:360px">
+    <svg viewBox="0 0 200 200"><g stroke="#8C52FF" stroke-width="44" stroke-linecap="round"><line x1="200" y1="0" x2="120" y2="130"/><line x1="200" y1="0" x2="175" y2="160"/></g></svg>
+  </div>
+  <div class="burst" style="left:-90px;bottom:-90px;width:260px;height:260px">
+    <svg viewBox="0 0 200 200"><g stroke="#FFDE59" stroke-width="40" stroke-linecap="round"><line x1="0" y1="200" x2="90" y2="80"/><line x1="0" y1="200" x2="150" y2="150"/></g></svg>
+  </div>
+  <div class="wrap">
+    <svg class="ast" viewBox="0 0 100 100" aria-hidden="true"><g stroke="#8C52FF" stroke-width="9" stroke-linecap="round"><line x1="50" y1="8" x2="50" y2="92"/><line x1="8" y1="50" x2="92" y2="50"/><line x1="20" y1="20" x2="80" y2="80"/><line x1="80" y1="20" x2="20" y2="80"/><line x1="30" y1="12" x2="70" y2="88"/><line x1="70" y1="12" x2="30" y2="88"/></g></svg>
+    <h1><span class="a">Propuesta</span><span class="b">Creativa</span></h1>
+    <div class="handle">INSTAGRAM: @CAMBIATEYVAMOS</div>
+    <p class="hero-sub">Una agenda cultural para encontrarnos, disfrutar y hacer planes</p>
+    <p class="scrollhint">Scrolleá<b>↓</b></p>
+  </div>
+</section>
+
+<!-- QUE ES -->
+<section id="que-es" class="bg-violeta">
+  <div class="burst" style="right:-70px;top:-70px;width:300px;height:300px">
+    <svg viewBox="0 0 200 200"><g stroke="#FF3434" stroke-width="40" stroke-linecap="round"><line x1="200" y1="0" x2="40" y2="60"/><line x1="200" y1="0" x2="90" y2="150"/><line x1="200" y1="0" x2="175" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--lima);color:var(--tinta)">¿De qué se trata?</span>
+    <h2 class="big pop"><span style="color:var(--lima)">La agenda</span><span style="color:var(--rosa)">cultural de ATE</span></h2>
+    <div class="que-grid">
+      <div class="que-text pop">
+        <p class="lead" style="margin-top:0">Un espacio <b>oficial pero no institucional</b> de ATE con el objetivo de ser agenda cultural en CABA.</p>
+        <p>Será un espacio cultural digital, con identidad propia, lenguaje nativo de redes y capacidad de hacer curaduría, generar contenido propio y construir comunidad.</p>
+        <p>La cuenta reunirá y difundirá actividades que muchas veces tienen poca difusión, junto con otras propuestas que tengan afinidad con la comunidad.</p>
+        <div class="fact-row">
+          <span class="fact">📍 CABA</span><span class="fact">✂️ Curaduría</span><span class="fact">🎬 Contenido propio</span><span class="fact">🤝 Comunidad</span>
+        </div>
+      </div>
+      <div class="sticker pop">
+        <h3>Espacios que se difunden</h3>
+        <ul>
+          <li><span class="pin">1</span>Anfiteatro Eva Perón</li>
+          <li><span class="pin">2</span>La Pepa Noia</li>
+          <li><span class="pin">3</span>Leopoldo González</li>
+          <li><span class="pin">+</span>Otras actividades afines a la comunidad</li>
+        </ul>
+      </div>
+    </div>
+    <p class="slogan pop">Una agenda cultural para encontrarnos, disfrutar y hacer planes!</p>
+  </div>
+</section>
+
+<!-- PUBLICO -->
+<section id="publico" class="bg-rosa">
+  <div class="burst" style="right:-60px;top:-50px;width:320px;height:320px">
+    <svg viewBox="0 0 200 200"><g stroke="#8C52FF" stroke-width="40" stroke-linecap="round"><line x1="200" y1="0" x2="40" y2="60"/><line x1="200" y1="0" x2="90" y2="150"/><line x1="200" y1="0" x2="175" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--violeta);color:var(--blanco)">4 audiencias</span>
+    <h2 class="big pop"><span style="color:var(--lima);-webkit-text-stroke:2px var(--tinta)">Público</span><span style="color:var(--rojo)">Objetivo</span></h2>
+
+    <div class="aud-list">
+      <article class="aud a1 pop">
+        <div class="aud-id">
+          <span class="aud-num">A</span>
+          <h3>La comunidad ATE</h3>
+          <p>Afiliado, trabajador estatal o cercano a la organización.</p>
+        </div>
+        <div class="col-des"><h4><i>⚠️</i>Desafíos</h4><ul>
+          <li>Se entera tarde de las actividades.</li>
+          <li>La información está dispersa en muchas cuentas.</li>
+          <li>No sabe qué actividades culturales hay.</li>
+          <li>Tiene poco tiempo y necesita información rápida.</li>
+          <li>Por el contexto económico, busca alternativas gratuitas o accesibles para salir y disfrutar.</li>
+        </ul></div>
+        <div class="col-obj"><h4><i>🎯</i>Objetivos</h4><ul>
+          <li>Encontrar actividades cerca.</li>
+          <li>Compartir actividades con amigos/familia sin gastar una fortuna.</li>
+          <li>Conocer propuestas nuevas.</li>
+          <li>Sentir que ATE también es un espacio de encuentro y cultura (sentimiento de pertenencia).</li>
+        </ul></div>
+      </article>
+
+      <article class="aud a2 pop">
+        <div class="aud-id">
+          <span class="aud-num">B</span>
+          <h3>Trabajadores culturales</h3>
+          <p>Artista, docente, tallerista, músico/a, actor/actriz, fotógrafo/a, bailarín/a, etc.</p>
+          <p class="msg">“¿Tenés una propuesta cultural? Queremos conocerla.”</p>
+        </div>
+        <div class="col-des"><h4><i>⚠️</i>Desafíos</h4><ul>
+          <li>Necesitan un espacio donde presentar su obra o propuesta.</li>
+          <li>Muchos espacios tienen costos altos.</li>
+          <li>Necesitan llegar a nuevos públicos.</li>
+          <li>Tienen dificultades para conseguir fechas.</li>
+          <li>A pesar de tener comunidad propia, necesitan ampliar el alcance.</li>
+        </ul></div>
+        <div class="col-obj"><h4><i>🎯</i>Objetivos</h4><ul>
+          <li>Encontrar un espacio.</li>
+          <li>Presentar su propuesta.</li>
+          <li>Ampliar público.</li>
+          <li>Generar nuevas oportunidades.</li>
+        </ul></div>
+      </article>
+
+      <article class="aud a3 pop">
+        <div class="aud-id">
+          <span class="aud-num">C</span>
+          <h3>El curioso cultural</h3>
+          <p>De CABA, no necesariamente afiliado/a. Busca actividades en la ciudad, especialmente gratuitas, accesibles, alternativas o poco conocidas.</p>
+        </div>
+        <div class="col-des"><h4><i>⚠️</i>Desafíos</h4><ul>
+          <li>Las agendas culturales son enormes y difíciles de filtrar.</li>
+          <li>Busca actividades distintas de las tradicionales, con poca visibilidad, y no las encuentra.</li>
+          <li>No le atrae lo masivo.</li>
+          <li>Escasez económica.</li>
+        </ul></div>
+        <div class="col-obj"><h4><i>🎯</i>Objetivos</h4><ul>
+          <li>Descubrir propuestas nuevas y fuera de lo tradicional.</li>
+          <li>Salidas austeras.</li>
+        </ul></div>
+      </article>
+
+      <article class="aud a4 pop">
+        <div class="aud-id">
+          <span class="aud-num">D</span>
+          <h3>Participante de talleres</h3>
+          <p>Participante de clases y talleres.</p>
+        </div>
+        <div class="col-des"><h4><i>⚠️</i>Desafíos</h4><ul>
+          <li>No sabe dónde encontrar talleres económicos y de calidad.</li>
+          <li>No encuentra propuestas que se adapten a sus horarios, presupuesto y nivel de experiencia.</li>
+          <li>Le interesan las disciplinas artísticas pero piensa que “no tiene talento” o que son para personas que ya saben.</li>
+          <li>Está cansado/a de la rutina.</li>
+        </ul></div>
+        <div class="col-obj"><h4><i>🎯</i>Objetivos</h4><ul>
+          <li>Actividades que le permitan desconectar de la rutina.</li>
+          <li>Aprender algo nuevo.</li>
+          <li>Conocer personas que compartan sus gustos e intereses.</li>
+          <li>Hacer algo por placer y no por obligación.</li>
+        </ul></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- VALOR -->
+<section id="valor" class="bg-rojo">
+  <div class="burst" style="left:-80px;top:-80px;width:300px;height:300px">
+    <svg viewBox="0 0 200 200"><g stroke="#8C52FF" stroke-width="40" stroke-linecap="round"><line x1="0" y1="0" x2="160" y2="60"/><line x1="0" y1="0" x2="110" y2="150"/><line x1="0" y1="0" x2="25" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--amarillo);color:var(--tinta)">Propuesta de valor</span>
+    <h2 class="big pop"><span style="color:var(--blanco)">De la agenda</span><span style="color:var(--amarillo)">al encuentro</span></h2>
+    <p class="lead pop">Una agenda cultural digital curada de actividades vinculadas a ATE en CABA, que acompaña a cada persona en cuatro pasos:</p>
+    <div class="flow">
+      <div class="step pop"><div class="n">1</div><h3>Descubrir</h3><p>Encontrar actividades que probablemente no aparecerían en el feed cotidiano del usuario.</p></div>
+      <div class="step pop"><div class="n">2</div><h3>Elegir</h3><p>Presentar la información de manera simple y ordenada para decidir rápido.</p></div>
+      <div class="step pop"><div class="n">3</div><h3>Participar</h3><p>Facilitar la inscripción, la asistencia y la difusión.</p></div>
+      <div class="step pop"><div class="n">4</div><h3>Encontrarse</h3><p>Convertir las actividades culturales en espacios de comunidad.</p></div>
+    </div>
+    <div class="formula pop" aria-label="Datos de cada actividad">
+      <span>qué</span><em>+</em><span>cuándo</span><em>+</em><span>dónde</span><em>+</em><span>cuánto</span><em>+</em><span>cómo participar</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTOS -->
+<section id="conceptos" class="bg-violeta">
+  <div class="burst" style="right:-70px;top:-60px;width:320px;height:320px">
+    <svg viewBox="0 0 200 200"><g stroke="#FF3434" stroke-width="40" stroke-linecap="round"><line x1="200" y1="0" x2="40" y2="60"/><line x1="200" y1="0" x2="90" y2="150"/><line x1="200" y1="0" x2="175" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--rosa);color:var(--tinta)">3 ideas fuerza</span>
+    <h2 class="big pop"><span style="color:var(--lima)">Conceptos</span><span style="color:var(--rosa)">clave</span></h2>
+    <div class="concepts">
+      <div class="concept pop"><div class="bulb">🏃</div><h3>Desconectá de la rutina, cambiate y vamos!</h3><p>La cuenta deja de ser solamente un nombre y se convierte en acción.</p><span class="tag">Acción</span></div>
+      <div class="concept pop"><div class="bulb">🔎</div><h3>La agenda que no sabías que necesitabas</h3><p>Orientado al descubrimiento. La cultura está pasando y en la cuenta te mostramos dónde y cuándo.</p><span class="tag">Descubrimiento</span></div>
+      <div class="concept pop"><div class="bulb">🫶</div><h3>La cultura también es encuentro</h3><p>Vinculado a la identidad de ATE. Una capa conceptual más profunda que simboliza la comunidad.</p><span class="tag">Identidad</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENSAJES -->
+<section id="mensajes" class="bg-rojo">
+  <div class="burst" style="right:-60px;bottom:-80px;width:340px;height:340px">
+    <svg viewBox="0 0 200 200"><g stroke="#8C52FF" stroke-width="40" stroke-linecap="round"><line x1="200" y1="200" x2="40" y2="140"/><line x1="200" y1="200" x2="90" y2="50"/><line x1="200" y1="200" x2="175" y2="25"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--lima);color:var(--tinta)">Lo que queremos decir</span>
+    <h2 class="big pop"><span style="color:var(--lima)">Mensajes</span><span style="color:var(--rosa)">principales</span></h2>
+    <div class="pills">
+      <span class="pill pop">Hay mucho para hacer y queremos que te enteres</span>
+      <span class="pill pop">La cultura también es un espacio de encuentro</span>
+      <span class="pill pop">Te acercamos actividades para aprender, disfrutar y compartir</span>
+      <span class="pill pop">ATE tiene espacios de dispersión y cultura</span>
+      <span class="pill pop">Queremos que el Anfiteatro Eva Perón vuelva a ser un espacio vivo</span>
+      <span class="pill pop">Propuestas gratuitas o muy accesibles</span>
+      <span class="pill pop">No es necesario ser afiliado para disfrutar de estas propuestas culturales</span>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section id="pilares" class="bg-lima">
+  <div class="burst" style="right:-70px;top:-70px;width:320px;height:320px">
+    <svg viewBox="0 0 200 200"><g stroke="#FF8FD1" stroke-width="40" stroke-linecap="round"><line x1="200" y1="0" x2="40" y2="60"/><line x1="200" y1="0" x2="90" y2="150"/><line x1="200" y1="0" x2="175" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--violeta);color:var(--blanco)">6 pilares + ideas</span>
+    <h2 class="big pop"><span style="color:var(--violeta)">Pilares de</span><span style="color:var(--rojo)">contenido</span></h2>
+    <div class="pillars">
+      <article class="pillar p1 pop">
+        <header><span class="k">📅 Funcional</span><h3>Agenda</h3><p>Contar qué va a suceder en el mes o en la semana, con la mayor anticipación posible.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li><b>Plan semanal:</b> ¿qué hacemos esta semana? Reel o carrusel con 5 actividades (o las que haya).</li>
+          <li><b>Te paso el dato:</b> formatos cortos en historias. “Este sábado hay una muestra gratis en… ¡guardá esta info!”</li>
+          <li><b>Planes de fin de semana</b> (todos los viernes): “Si te gustaría tener planes este finde, seguí leyendo”.</li>
+          <li>Si te gusta el cine / teatro / tango, mirá esto.</li>
+          <li>4 actividades que no sabías que existían en CABA.</li>
+          <li>Compartí este plan con esa persona especial…</li>
+          <li>Para este finde te presentamos más opciones que Netflix.</li>
+        </ul></div>
+      </article>
+
+      <article class="pillar p2 pop">
+        <header><span class="k">🔎 Aportar valor</span><h3>Descubrimiento</h3><p>3 planes gratis para este finde · 5 cosas que podés hacer en ATE esta semana · ¿No sabés qué hacer el sábado? Mirá esto.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li>¿Sabías que existe este lugar? Esto está pasando en CABA y no sabías.</li>
+          <li>Te presentamos un lugar que merece más visitas. Un lugar para guardar en favoritos.</li>
+          <li>Este es el dato cultural que te faltaba.</li>
+          <li>Si siempre hacés los mismos planes, esto es para vos. ¿Buscás un plan distinto?</li>
+          <li>Te recomendamos algo que seguro no conocés.</li>
+          <li>Cultura que está pasando cerca tuyo: ¿estás cerca de tal barrio? Aprovechá y visitá tal lugar.</li>
+        </ul></div>
+      </article>
+
+      <article class="pillar p3 pop">
+        <header><span class="k">📍 Los lugares</span><h3>Conocé los espacios</h3><p>Presentar el Anfiteatro Eva Perón, La Pepa y Leopoldo González no como fichas institucionales, sino con la idea de “este lugar existe y probablemente no sabías todo lo que pasa acá”.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li><b>#40años40historias:</b> sección de entrevistas relacionadas al Anfiteatro.</li>
+          <li>Este escenario tiene una historia para contar… ¿Cuántas historias entran en 40 años?</li>
+          <li>Este lugar estuvo acá todo este tiempo…</li>
+          <li>¿Qué harías vos en este escenario? ¿Qué actividades harías en este lugar?</li>
+          <li>Te mostramos todo lo que sucede en este espacio.</li>
+          <li>Mirá cómo en este lugar se aprende, se crea y se comparte.</li>
+          <li>Detrás de esta puerta hay una propuesta cultural.</li>
+        </ul></div>
+      </article>
+
+      <article class="pillar p4 pop">
+        <header><span class="k">🎤 Historias</span><h3>Cultura en primera persona</h3><p>Historias de artistas, docentes, talleristas y participantes: ¿Qué aprendiste en este taller? ¿Por qué venís al teatro? “3 preguntas a…” La historia detrás de esta obra.</p></header>
+        <div class="ideas"><h4>Preguntas para entrevistas breves</h4><ul>
+          <li>¿Por qué hacés esto? ¿Cuál es tu misión?</li>
+          <li>¿Cómo llegaste hasta acá?</li>
+          <li>¿Qué significa este espacio para vos?</li>
+          <li>¿Qué te gustaría que la gente se lleve de esta obra?</li>
+          <li>¿Qué le dirías a alguien que nunca hizo este taller?</li>
+          <li>Tres preguntas antes de salir al escenario.</li>
+          <li>Terminá la frase: para mí hacer teatro es…</li>
+          <li>¿Qué tiene este lugar que no tiene otro? ¿Qué lo hace diferente?</li>
+        </ul></div>
+      </article>
+
+      <article class="pillar p5 pop">
+        <header><span class="k">🎬 El Anfiteatro por dentro</span><h3>Detrás de escena</h3><p>Preparación y ensayos, armado, técnicos, artistas, el espacio vacío vs. el espacio lleno.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li>Lo que no ves cuando llegás a una función. Así empieza un espectáculo.</li>
+          <li>3 horas antes de que llegue el público. Vení a preparar una función con nosotros.</li>
+          <li>Conocé a quienes hacen posible esta actividad / obra.</li>
+          <li>La parte que nunca aparece en un flyer.</li>
+          <li>Así se vive una actividad desde adentro.</li>
+        </ul>
+        <p class="goal">Idea que comunica: “Estamos poniendo este lugar en movimiento”.</p></div>
+      </article>
+
+      <article class="pillar p6 pop">
+        <header><span class="k">😂 Lúdico y humorístico</span><h3>Cambiate y vamos!</h3><p>Aprovechar el lenguaje nativo de redes: memes, gifs, POVs.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li>POV: dijiste que este finde no salías… (ironía)</li>
+          <li>Tu grupo de WhatsApp: “¿Qué hacemos?”… Nosotros…</li>
+          <li>“No tengo plata para salir”.</li>
+          <li>Cuando descubrís que había una actividad gratis y nadie te avisó.</li>
+          <li>Cuando encontrás un plan y no tenés que organizarlo vos.</li>
+          <li>Hagamos algo tranqui…</li>
+          <li>Acá tu próxima excusa para salir de casa.</li>
+        </ul></div>
+      </article>
+    </div>
+
+    <div class="pillars" style="grid-template-columns:1fr">
+      <article class="pillar p2 pop" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)">
+        <header style="background:var(--violeta)"><span class="k">🗳️ Encuestas y comunidad</span><h3>Participación</h3><p>Función estratégica: usar Instagram como herramienta de escucha para decidir la programación.</p></header>
+        <div class="ideas"><h4>Ideas</h4><ul>
+          <li>¿Qué actividad te gustaría disfrutar? · Elegí el próximo plan (con opciones).</li>
+          <li>¿Qué taller te gustaría? ¿Qué obra querés ver? ¿Qué actividad traerías al Anfiteatro?</li>
+          <li>¿Te gustaría que vuelva la peña?</li>
+          <li>¿Teatro o cine? ¿Tango o folklore? ¿Qué actividad harías un sábado?</li>
+          <li>¿Con quién vendrías a ver esta obra o a hacer esta actividad? ¡Etiquetalo!</li>
+          <li>Si pudieras programar una actividad para el próximo mes, ¿cuál sería? ¿Qué artistas te gustaría ver?</li>
+          <li>Votá, proponé, compartí.</li>
+        </ul>
+        <p class="goal">Remate: este espacio lo construimos entre todos.</p></div>
+      </article>
+    </div>
+
+    <div class="extra pop">
+      <h3>Otros disparadores</h3>
+      <ul>
+        <li>Si siempre quisiste aprender pintura, ¡esta es tu oportunidad!</li>
+        <li>¿Y si este mes aprendés algo nuevo?</li>
+        <li>Menos scroll, más teatro / canto / baile</li>
+        <li>Este espectáculo merece un lugar en tu agenda</li>
+        <li>¿Cuál fue la última película que te voló la cabeza?</li>
+        <li>¿Terror, comedia o drama?</li>
+        <li>Tu algoritmo hoy somos nosotros</li>
+        <li>¿Quiénes pasaron por acá?</li>
+        <li>Una foto. Una historia.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIAS -->
+<section id="historias" class="bg-violeta">
+  <div class="burst" style="right:-60px;top:-60px;width:320px;height:320px">
+    <svg viewBox="0 0 200 200"><g stroke="#FFDE59" stroke-width="40" stroke-linecap="round"><line x1="200" y1="0" x2="40" y2="60"/><line x1="200" y1="0" x2="90" y2="150"/><line x1="200" y1="0" x2="175" y2="175"/></g></svg>
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" style="background:var(--amarillo);color:var(--tinta)">Perfil de Instagram</span>
+    <h2 class="big pop"><span style="color:var(--lima)">Historias</span><span style="color:var(--rosa)">destacadas</span></h2>
+    <div class="hl">
+      <div class="hl-item pop"><div class="ring"><div><span class="e">📰</span><h3>Actualidad</h3></div></div><p>Actividades recientes y próximas del mes o la semana</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">📅</span><h3>Agenda</h3></div></div><p>Calendario general</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">🤸</span><h3>Actividades</h3></div></div><p>Clases y talleres</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">🎭</span><h3>Espectáculos</h3></div></div><p>Teatro, stand up, música, danza…</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">🎨</span><h3>Muestras</h3></div></div><p>Exposiciones, fotografía, pintura, muestras de alumnos</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">🎬</span><h3>Cine</h3></div></div><p>Películas, cortos, ciclos</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">📍</span><h3>Espacios</h3></div></div><p>Anfiteatro, La Pepa, Leopoldo González y otros</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">💡</span><h3>Nosotros</h3></div></div><p>¿Quiénes somos? Presentación breve del proyecto</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">📬</span><h3>Newsletter</h3></div></div><p>Formulario para inscribirse y recibir novedades</p></div>
+      <div class="hl-item pop"><div class="ring"><div><span class="e">🤝</span><h3>Proponé</h3></div></div><p>Para artistas, talleres y espacios que quieran acercar propuestas</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section class="close bg-amarillo">
+  <div class="burst" style="left:-80px;bottom:-80px;width:280px;height:280px">
+    <svg viewBox="0 0 200 200"><g stroke="#FF3434" stroke-width="40" stroke-linecap="round"><line x1="0" y1="200" x2="160" y2="140"/><line x1="0" y1="200" x2="110" y2="50"/><line x1="0" y1="200" x2="25" y2="25"/></g></svg>
+  </div>
+  <div class="wrap">
+    <h2 class="big pop"><span>Cambiate</span><span>y vamos!</span></h2>
+    <p class="pop">Hay mucho para hacer y queremos que te enteres. La cultura también es encuentro.</p>
+    <div class="handle pop">INSTAGRAM: @CAMBIATEYVAMOS</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Rebote al entrar (los elementos siempre son visibles)
+  var pops = document.querySelectorAll('.pop');
+  if('IntersectionObserver' in window && !reduce){
+    var vh = window.innerHeight;
+    pops.forEach(function(el){ if(el.getBoundingClientRect().top > vh) el.classList.add('pre'); });
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} });
+    },{rootMargin:'0px 0px -8% 0px'});
+    pops.forEach(function(el){ if(el.classList.contains('pre')) io.observe(el); });
+  }
+
+  // Barra de progreso + sección activa
+  var bar = document.getElementById('progress');
+  var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (h>0 ? Math.min(1, window.scrollY/h) : 0) + ')';
+    var cur = 0, mid = window.innerHeight*0.35;
+    secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top <= mid) cur = i; });
+    links.forEach(function(a,i){
+      var on = i===cur;
+      if(on !== a.classList.contains('on')){
+        a.classList.toggle('on', on);
+        if(on && a.scrollIntoView){ var nav=a.parentNode; nav.scrollTo({left:a.offsetLeft - 16, behavior: reduce?'auto':'smooth'}); }
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+</body>
+</html>
